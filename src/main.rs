@@ -10,7 +10,7 @@ fn index(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 
     Ok(HttpResponse::build(StatusCode::OK)
         .content_type("text/html; charset=utf-8")
-        .body("butt"))
+        .body("woo"))
 }
 
 fn main() {
