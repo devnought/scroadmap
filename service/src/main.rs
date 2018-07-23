@@ -5,7 +5,7 @@ use actix_web::{
     http::{Method, StatusCode}, server, App, HttpRequest, HttpResponse,
 };
 
-fn index(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+fn index(req: &HttpRequest) -> actix_web::Result<HttpResponse> {
     scroadmap::get_stuff();
 
     Ok(HttpResponse::build(StatusCode::OK)
