@@ -1,39 +1,62 @@
 #![feature(rust_2018_preview)]
 #![warn(rust_2018_idioms)]
 
-use yew::{prelude::*, html, html_impl};
+use stdweb::web::Date;
+use yew::{html, html_impl, prelude::*};
 
-struct Model {}
+struct Model {
+    //console: ConsoleService,
+    value: i64,
+}
 
 enum Msg {
-    DoIt,
+    Increment,
+    Decrement,
+    Bulk(Vec<Msg>),
 }
 
 impl Component for Model {
-    // Some details omitted. Explore the examples to see more.
-
     type Message = Msg;
     type Properties = ();
 
     fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Model {}
+        Model {
+            //console: ConsoleService::new(),
+            value: 0,
+        }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            Msg::DoIt => {
-                // Update your model on events
-                true
+            Msg::Increment => {
+                self.value = self.value + 1;
+                //self.console.log("plus one");
             }
+            Msg::Decrement => {
+                self.value = self.value - 1;
+                //self.console.log("minus one");
+            }
+            Msg::Bulk(list) => for msg in list {
+                self.update(msg);
+                //self.console.log("Bulk action");
+            },
         }
+        true
     }
 }
 
 impl Renderable<Model> for Model {
     fn view(&self) -> Html<Self> {
         html! {
-            // Render your model here
-            <button onclick=|_| Msg::DoIt,>{ "Click me!" }</button>
+            <div>
+                <nav class="menu",>
+                    <button onclick=|_| Msg::Increment,>{ "Increment" }</button>
+                    <button onclick=|_| Msg::Decrement,>{ "Decrement" }</button>
+                    <button onclick=|_| Msg::Bulk(vec![Msg::Increment, Msg::Increment]),>{ "Increment Twice" }</button>
+                </nav>
+                <p>{ self.value }</p>
+                <p>{ Date::new().to_string() }</p>
+            </div>
         }
     }
 }
