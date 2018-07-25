@@ -2,10 +2,10 @@
 #![warn(rust_2018_idioms)]
 
 use stdweb::web::Date;
-use yew::{html, html_impl, prelude::*};
+use yew::{html, html_impl, prelude::*, services::ConsoleService};
 
 struct Model {
-    //console: ConsoleService,
+    console: ConsoleService,
     value: i64,
 }
 
@@ -21,7 +21,7 @@ impl Component for Model {
 
     fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
         Model {
-            //console: ConsoleService::new(),
+            console: ConsoleService::new(),
             value: 0,
         }
     }
@@ -30,15 +30,15 @@ impl Component for Model {
         match msg {
             Msg::Increment => {
                 self.value = self.value + 1;
-                //self.console.log("plus one");
+                self.console.log("plus one");
             }
             Msg::Decrement => {
                 self.value = self.value - 1;
-                //self.console.log("minus one");
+                self.console.log("minus one");
             }
             Msg::Bulk(list) => for msg in list {
                 self.update(msg);
-                //self.console.log("Bulk action");
+                self.console.log("Bulk action");
             },
         }
         true
@@ -50,8 +50,8 @@ impl Renderable<Model> for Model {
         html! {
             <div>
                 <nav class="menu",>
-                    <button onclick=|_| Msg::Increment,>{ "Increment" }</button>
-                    <button onclick=|_| Msg::Decrement,>{ "Decrement" }</button>
+                    <button onclick=|_| Msg::Increment,>{ "Incrementss" }</button>
+                    <button onclick=|_| Msg::Decrement,>{ "Decrementss" }</button>
                     <button onclick=|_| Msg::Bulk(vec![Msg::Increment, Msg::Increment]),>{ "Increment Twice" }</button>
                 </nav>
                 <p>{ self.value }</p>
