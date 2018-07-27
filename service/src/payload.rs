@@ -20,8 +20,8 @@ pub struct PayloadData {
     description: String,
     body: String,
     order: String,
-    thumbnail: PayloadImage,
-    background: PayloadImage,
+    thumbnail: PayloadThumbnail,
+    background: PayloadThumbnail,
     importer_id: String,
     info_heading: String,
     releases: Vec<PayloadRelease>,
@@ -37,13 +37,13 @@ impl PayloadData {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct PayloadImage {
+pub struct PayloadThumbnail {
     id: String,
-    urls: PayloadImageUrls,
+    urls: PayloadThumbnailUrls,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct PayloadImageUrls {
+pub struct PayloadThumbnailUrls {
     square: Option<String>,
     rect: Option<String>,
     large: Option<String>,
@@ -81,7 +81,7 @@ pub struct PayloadReleaseCard {
     description: String,
     body: String,
     order: u32,
-    thumbnail: PayloadImage,
+    thumbnail: Option<PayloadThumbnail>,
     inprogress: u32,
     completed: u32,
     tasks: u32,
