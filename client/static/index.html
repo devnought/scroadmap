@@ -9,7 +9,11 @@
 </head>
 
 <body>
-    <script src="index.js"></script>
+    <script src="client.js"></script>
+    <script>
+        wasm_bindgen("./client_bg.wasm")
+            .then(() => wasm_bindgen.greet("World"));
+    </script>
 </body>
 
 </html>
