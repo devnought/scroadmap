@@ -7,8 +7,6 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 
 [dependencies]
 actix-web = { version = "0.7.2", default-features = false }
-bincode = "1.0.1"
-brotli = "2.5.0"
 payload = { path = "../payload" }
 reqwest = "0.8.6"
 serde_json = "1.0.24"

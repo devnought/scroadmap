@@ -4,6 +4,8 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 
+use std::io::Write;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Payload {
     success: u32,
@@ -100,6 +102,17 @@ pub struct PayloadReleaseCategory {
     board_id: u32,
     name: String,
     order: u32,
+}
+
+pub fn encode<T>(payload: &Payload, writer: T)
+where
+    T: Write,
+{
+    let quality = 11u32; // 0 - 11
+    let lgwin = 0u32; // 16 to 24, or 0 to be based on quality
+    let brotli_write = brotli::enc::writer::CompressorWriter::new(writer, 1024 * 8, quality, lgwin);
+
+    bincode::serialize_into(brotli_write, payload).expect("Could not write data to writer");
 }
 
 pub fn decode(data: &[u8]) -> Payload {

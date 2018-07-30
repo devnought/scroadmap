@@ -1095,8 +1095,6 @@ name = "scroadmap"
 version = "0.1.0"
 dependencies = [
  "actix-web 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "bincode 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "brotli 2.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "payload 0.1.0",
  "reqwest 0.8.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.24 (registry+https://github.com/rust-lang/crates.io-index)",
