@@ -9,7 +9,12 @@
 </head>
 
 <body>
-    <script src="client_ugly.js"></script>
+    <!-- Polyfill for TextDecoder -->
+    <!--<script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding-indexes.js"></script>
+    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding.js"></script>-->
+    <!-- ======================== -->
+
+    <script src="client.js"></script>
     <script>
         wasm_bindgen("./client_bg.wasm").then(() => wasm_bindgen.run());
     </script>
