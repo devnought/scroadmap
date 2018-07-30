@@ -54,7 +54,13 @@ pub fn main() -> ClosureHandle {
 
     let data_cb = Closure::new(move |res: JsValue| {
         let data = Uint8Array::new(&res);
-        log(&format!("Buffer: {:?}", data.byte_length()));
+        let mut buffer: Vec<u8> = Vec::new();
+
+        data.for_each(&mut |val, _, _| {
+            buffer.push(val);
+        });
+
+        log(&format!("Buffer: {:?}", buffer));
     });
 
     let cb = Closure::new(move |res: JsValue| Response::from(res).array_buffer().then(&data_cb));
