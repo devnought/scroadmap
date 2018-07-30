@@ -1,6 +1,6 @@
 /* tslint:disable */
-export function run(): ClosureResponmseHandle;
+export function main(): ClosureHandle;
 
-export class ClosureResponmseHandle {
+export class ClosureHandle {
 free(): void;
 }
