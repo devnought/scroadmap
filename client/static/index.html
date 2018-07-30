@@ -6,6 +6,12 @@
     <title>Client</title>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Polyfill for TextDecoder (Edge) -->
+    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding-indexes.js"></script>
+    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding.js"></script>
+    <!-- ======================== -->
+
     <script src="client.js"></script>
     <script>
         window.addEventListener("load", _ => {
@@ -15,10 +21,6 @@
 </head>
 
 <body>
-    <!-- Polyfill for TextDecoder -->
-    <!--<script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding-indexes.js"></script>
-    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding.js"></script>-->
-    <!-- ======================== -->
 </body>
 
 </html>

@@ -52,9 +52,9 @@ pub fn main() -> ClosureHandle {
 
     document.body().append_child(val);
 
-    let data_cb = Closure::new(move |res: JsValue| {
+    let data_cb = Closure::new(move |res| {
         let data = Uint8Array::new(&res);
-        let mut buffer: Vec<u8> = Vec::new();
+        let mut buffer = Vec::new();
 
         data.for_each(&mut |val, _, _| {
             buffer.push(val);
@@ -64,7 +64,7 @@ pub fn main() -> ClosureHandle {
         log(&format!("{:#?}", payload));
     });
 
-    let cb = Closure::new(move |res: JsValue| Response::from(res).array_buffer().then(&data_cb));
+    let cb = Closure::new(move |res| Response::from(res).array_buffer().then(&data_cb));
 
     fetch("1532669929.bin.br").then(&cb);
 
