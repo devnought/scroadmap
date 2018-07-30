@@ -1,3 +1,9 @@
+extern crate bincode;
+extern crate brotli;
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Payload {
     success: u32,
@@ -94,4 +100,18 @@ pub struct PayloadReleaseCategory {
     board_id: u32,
     name: String,
     order: u32,
+}
+
+pub fn decode(data: &[u8]) -> Payload {
+    let decom = brotli::Decompressor::new(data, 1024 * 8);
+
+    bincode::deserialize_from(decom).expect("nope")
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
 }

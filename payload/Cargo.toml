@@ -1,0 +1,10 @@
+[package]
+name = "payload"
+version = "0.1.0"
+authors = ["Kyle Gretchev <kyle.gretchev@magnetforensics.com>"]
+
+[dependencies]
+bincode = "1.0.1"
+brotli = "2.5.0"
+serde = "1.0.70"
+serde_derive = "1.0.70"

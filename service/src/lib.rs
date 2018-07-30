@@ -1,12 +1,9 @@
 extern crate bincode;
 extern crate brotli;
+extern crate payload;
 extern crate reqwest;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
 extern crate serde_json;
 
-mod payload;
 use payload::Payload;
 
 use std::fs::File;
