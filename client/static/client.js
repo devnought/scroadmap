@@ -112,15 +112,155 @@
     __exports.__wbg_appendChild_d0aae0d981a89ffb = function(arg0, arg1) {
         __wbg_appendChild_d0aae0d981a89ffb_target.call(getObject(arg0), takeObject(arg1));
     };
+    
+    const __wbg_log_04827950d900fcc3_target = console.log;
+    
+    __exports.__wbg_log_04827950d900fcc3 = function(arg0, arg1) {
+        let varg0 = getStringFromWasm(arg0, arg1);
+        __wbg_log_04827950d900fcc3_target(varg0);
+    };
+    
+    __exports.__wbg_fetch_689c98118c6f66d2 = function(arg0, arg1) {
+        let varg0 = getStringFromWasm(arg0, arg1);
+        return addHeapObject(fetch(varg0));
+    };
+    
+    const __wbg_then_18faf198352ccd03_target = Promise.prototype.then  || function() {
+        throw new Error(`wasm-bindgen: Promise.prototype.then does not exist`);
+    } ;
+    
+    let cachedEncoder = new TextEncoder('utf-8');
+    
+    function passStringToWasm(arg) {
+        
+        const buf = cachedEncoder.encode(arg);
+        const ptr = wasm.__wbindgen_malloc(buf.length);
+        getUint8Memory().set(buf, ptr);
+        return [ptr, buf.length];
+    }
+    
+    let cachegetUint32Memory = null;
+    function getUint32Memory() {
+        if (cachegetUint32Memory === null || cachegetUint32Memory.buffer !== wasm.memory.buffer) {
+            cachegetUint32Memory = new Uint32Array(wasm.memory.buffer);
+        }
+        return cachegetUint32Memory;
+    }
+    
+    let cachedGlobalArgumentPtr = null;
+    function globalArgumentPtr() {
+        if (cachedGlobalArgumentPtr === null) {
+            cachedGlobalArgumentPtr = wasm.__wbindgen_global_argument_ptr();
+        }
+        return cachedGlobalArgumentPtr;
+    }
+    
+    function getGlobalArgument(arg) {
+        const idx = globalArgumentPtr() / 4 + arg;
+        return getUint32Memory()[idx];
+    }
+    
+    __exports.__wbg_then_18faf198352ccd03 = function(arg0, arg1) {
+        let idxarg1 = getUint32Memory()[arg1 / 4];
+        if (idxarg1 === 0xffffffff) {
+            let cbarg1 = function(arg0) {
+                let a = this.a;
+                this.a = 0;
+                const [ptr0, len0] = passStringToWasm(arg0);
+                try {
+                    return this.f(a, this.b, ptr0, len0);
+                    
+                } finally {
+                    this.a = a;
+                    
+                }
+                
+            };
+            cbarg1.a = getGlobalArgument(0);
+            cbarg1.b = getGlobalArgument(1);
+            cbarg1.f = wasm.__wbg_function_table.get(getGlobalArgument(2));
+            let real = cbarg1.bind(cbarg1);
+            real.original = cbarg1;
+            idxarg1 = getUint32Memory()[arg1 / 4] = addHeapObject(real);
+        }
+        __wbg_then_18faf198352ccd03_target.call(getObject(arg0), getObject(idxarg1));
+    };
+    
+    const __wbg_then_0719e1fd1f40fd3a_target = Promise.prototype.then  || function() {
+        throw new Error(`wasm-bindgen: Promise.prototype.then does not exist`);
+    } ;
+    
+    __exports.__wbg_then_0719e1fd1f40fd3a = function(arg0, arg1) {
+        let idxarg1 = getUint32Memory()[arg1 / 4];
+        if (idxarg1 === 0xffffffff) {
+            let cbarg1 = function(arg0) {
+                let a = this.a;
+                this.a = 0;
+                try {
+                    return this.f(a, this.b, addHeapObject(arg0));
+                    
+                } finally {
+                    this.a = a;
+                    
+                }
+                
+            };
+            cbarg1.a = getGlobalArgument(0);
+            cbarg1.b = getGlobalArgument(1);
+            cbarg1.f = wasm.__wbg_function_table.get(getGlobalArgument(2));
+            let real = cbarg1.bind(cbarg1);
+            real.original = cbarg1;
+            idxarg1 = getUint32Memory()[arg1 / 4] = addHeapObject(real);
+        }
+        return addHeapObject(__wbg_then_0719e1fd1f40fd3a_target.call(getObject(arg0), getObject(idxarg1)));
+    };
+    
+    const __wbg_text_e86a7e3a2d6fc9d1_target = Response.prototype.text  || function() {
+        throw new Error(`wasm-bindgen: Response.prototype.text does not exist`);
+    } ;
+    
+    __exports.__wbg_text_e86a7e3a2d6fc9d1 = function(arg0) {
+        return addHeapObject(__wbg_text_e86a7e3a2d6fc9d1_target.call(getObject(arg0)));
+    };
     /**
-    * @returns {void}
+    * @returns {ClosureResponmseHandle}
     */
     __exports.run = function() {
-        return wasm.run();
+        return ClosureResponmseHandle.__construct(wasm.run());
     };
+    
+    /**
+    */
+    class ClosureResponmseHandle {
+        
+        static __construct(ptr) {
+            return new ClosureResponmseHandle(ptr);
+        }
+        
+        constructor(ptr) {
+            this.ptr = ptr;
+        }
+        
+        free() {
+            const ptr = this.ptr;
+            this.ptr = 0;
+            wasm.__wbg_closureresponmsehandle_free(ptr);
+        }
+    }
+    __exports.ClosureResponmseHandle = ClosureResponmseHandle;
     
     __exports.__wbindgen_object_drop_ref = function(i) {
         dropRef(i);
+    };
+    
+    __exports.__wbindgen_cb_drop = function(i) {
+        let obj = getObject(i).original;
+        obj.a = obj.b = 0;
+        dropRef(i);
+    };
+    
+    __exports.__wbindgen_throw = function(ptr, len) {
+        throw new Error(getStringFromWasm(ptr, len));
     };
     
     function init(wasm_path) {
