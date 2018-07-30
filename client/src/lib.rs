@@ -4,6 +4,9 @@
 use js_sys::Uint8Array;
 use wasm_bindgen::prelude::*;
 
+mod payload;
+use crate::payload::Payload;
+
 #[wasm_bindgen]
 extern "C" {
     // Document
@@ -60,16 +63,21 @@ pub fn main() -> ClosureHandle {
             buffer.push(val);
         });
 
-        log(&format!("Buffer: {:?}", buffer));
+        let payload = transform_payload(&buffer);
+        log(&format!("{:#?}", payload));
     });
 
     let cb = Closure::new(move |res: JsValue| Response::from(res).array_buffer().then(&data_cb));
 
     fetch("1532669929.bin.br").then(&cb);
 
-    log("asd");
-
     ClosureHandle(cb)
+}
+
+fn transform_payload(data: &[u8]) -> Payload {
+    let decom = brotli::Decompressor::new(data, 1024 * 8);
+    
+    bincode::deserialize_from(decom).expect("nope")
 }
 
 #[cfg(test)]
