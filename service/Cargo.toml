@@ -8,5 +8,5 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 [dependencies]
 actix-web = { version = "0.7.2", default-features = false }
 payload = { path = "../payload" }
-reqwest = "0.8.6"
+reqwest = "0.8.7"
 serde_json = "1.0.24"
