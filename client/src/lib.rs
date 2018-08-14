@@ -1,8 +1,10 @@
 #![feature(rust_2018_preview)]
 #![warn(rust_2018_idioms)]
 
-use js_sys::Uint8Array;
+use futures::{Async, Future, Poll};
+use js_sys::{Promise, Uint8Array};
 use wasm_bindgen::prelude::*;
+use wasm_bindgen_futures::{future_to_promise, JsFuture};
 
 #[wasm_bindgen]
 extern "C" {
@@ -30,11 +32,6 @@ extern "C" {
 
     // Fetch
     fn fetch(url: &str) -> Promise;
-
-    // Promise
-    type Promise;
-    #[wasm_bindgen(method, js_name = then)]
-    fn then(this: &Promise, cb: &Closure<dyn FnMut(JsValue)>);
 
     // Response
     type Response;
@@ -64,7 +61,9 @@ pub fn main() -> ClosureHandle {
         log(&format!("{:#?}", payload));
     });
 
-    let cb = Closure::new(move |res| Response::from(res).array_buffer().then(&data_cb));
+    let cb = Closure::new(move |res| {
+        Response::from(res).array_buffer().then(&data_cb);
+    });
 
     fetch("1532669929.bin.br").then(&cb);
 
