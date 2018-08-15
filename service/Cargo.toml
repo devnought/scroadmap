@@ -9,4 +9,4 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 actix-web = { version = "0.7.3", default-features = false }
 payload = { path = "../payload" }
 reqwest = "0.8.7"
-serde_json = "1.0.24"
+serde_json = "1.0.26"
