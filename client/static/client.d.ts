@@ -1,6 +1,3 @@
 /* tslint:disable */
-export function main(): ClosureHandle;
+export function main(): any;
 
-export class ClosureHandle {
-free(): void;
-}

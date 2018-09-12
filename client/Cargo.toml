@@ -1,5 +1,3 @@
-cargo-features = ["edition"]
-
 [package]
 edition = "2018"
 name = "client"
@@ -10,11 +8,9 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-futures = "0.1.23"
-js-sys = "0.2.2"
-#js-sys = { git = "https://github.com/rustwasm/wasm-bindgen" }
+futures = "0.1.24"
+js-sys = { git = "https://github.com/rustwasm/wasm-bindgen" }
 payload = { path = "../payload" }
-wasm-bindgen = "0.2.17"
-wasm-bindgen-futures = "0.2.17"
-#web-sys = "0.0.1"
-#web-sys = { git = "https://github.com/rustwasm/wasm-bindgen" }
+wasm-bindgen = { git = "https://github.com/rustwasm/wasm-bindgen" }
+wasm-bindgen-futures = { git = "https://github.com/rustwasm/wasm-bindgen" }
+web-sys = { git = "https://github.com/rustwasm/wasm-bindgen", features = [ "Request", "RequestInit", "Response", "Window" ] }

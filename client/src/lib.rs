@@ -1,15 +1,15 @@
-#![feature(rust_2018_preview)]
 #![warn(rust_2018_idioms)]
 
-use futures::{Async, Future, Poll};
+use futures::{future, Future};
 use js_sys::{Promise, Uint8Array};
-use wasm_bindgen::prelude::*;
+use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::{future_to_promise, JsFuture};
+use web_sys::{Request, RequestInit, Response, Window};
 
 #[wasm_bindgen]
 extern "C" {
     // Document
-    type HTMLDocument;
+    /*type HTMLDocument;
     static document: HTMLDocument;
 
     #[wasm_bindgen(method, js_name = createElement)]
@@ -24,50 +24,44 @@ extern "C" {
     fn set_inner_html(this: &Element, html: &str);
 
     #[wasm_bindgen(method, js_name = appendChild)]
-    fn append_child(this: &Element, other: Element);
+    fn append_child(this: &Element, other: Element);*/
 
     // Console
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
-
-    // Fetch
-    fn fetch(url: &str) -> Promise;
-
-    // Response
-    type Response;
-    #[wasm_bindgen(method, js_name = arrayBuffer)]
-    fn array_buffer(this: &Response) -> Promise;
 }
 
 #[wasm_bindgen]
-pub struct ClosureHandle(Closure<dyn FnMut(JsValue)>);
+pub fn main() -> Promise {
+    let mut opts = RequestInit::new();
+    opts.method("GET");
 
-#[wasm_bindgen]
-pub fn main() -> ClosureHandle {
-    let val = document.create_element("div");
-    val.set_inner_html("Oh hey there");
+    let request = Request::new_with_str_and_init("1532669929.bin.br", &opts).unwrap();
+    let request_promise = Window::fetch_with_request(&request);
 
-    document.body().append_child(val);
+    let future = JsFuture::from(request_promise)
+        .and_then(|resp_value| {
+            let resp = resp_value.dyn_into::<Response>().unwrap();
+            resp.array_buffer()
+        }).and_then(|array_buffer_value: Promise| JsFuture::from(array_buffer_value))
+        .and_then(|array_buffer| {
+            let data = Uint8Array::new(&array_buffer);
 
-    let data_cb = Closure::new(move |res| {
-        let data = Uint8Array::new(&res);
-        let mut buffer = Vec::new();
+            // Dirty hack for now until uint8array can be used or coerced
+            // into a slice or vec.
+            let mut buffer = Vec::new();
 
-        data.for_each(&mut |val, _, _| {
-            buffer.push(val);
+            data.for_each(&mut |val, _, _| {
+                buffer.push(val);
+            });
+
+            let payload = payload::decode(&buffer);
+
+            future::ok(JsValue::from_str(&format!("{:#?}", payload)))
         });
 
-        let payload = payload::decode(&buffer);
-        log(&format!("{:#?}", payload));
-    });
-
-    let cb = Closure::new(move |res| {
-        Response::from(res).array_buffer().then(&data_cb);
-    });
-
-    fetch("1532669929.bin.br").then(&cb);
-
-    ClosureHandle(cb)
+    // Convert this Rust `Future` back into a JS `Promise`.
+    future_to_promise(future)
 }
 
 #[cfg(test)]
