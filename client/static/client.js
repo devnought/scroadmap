@@ -47,6 +47,10 @@
         return takeObject(wasm.main());
     };
     
+    const __widl_f_create_element_Document_target = Document.prototype.createElement || function() {
+        throw new Error(`wasm-bindgen: Document.prototype.createElement does not exist`);
+    };
+    
     let cachegetUint32Memory = null;
     function getUint32Memory() {
         if (cachegetUint32Memory === null || cachegetUint32Memory.buffer !== wasm.memory.buffer) {
@@ -80,6 +84,66 @@
         return cachedDecoder.decode(getUint8Memory().subarray(ptr, ptr + len));
     }
     
+    __exports.__widl_f_create_element_Document = function(arg0, arg1, arg2, exnptr) {
+        let varg1 = getStringFromWasm(arg1, arg2);
+        try {
+            return addHeapObject(__widl_f_create_element_Document_target.call(getObject(arg0), varg1));
+        } catch (e) {
+            const view = getUint32Memory();
+            view[exnptr / 4] = 1;
+            view[exnptr / 4 + 1] = addHeapObject(e);
+            
+        }
+    };
+    
+    function GetOwnOrInheritedPropertyDescriptor(obj, id) {
+        while (obj) {
+            let desc = Object.getOwnPropertyDescriptor(obj, id);
+            if (desc) return desc;
+            obj = Object.getPrototypeOf(obj);
+        }
+        throw new Error(`descriptor for id='${id}' not found`);
+    }
+    
+    const __widl_f_body_Document_target = GetOwnOrInheritedPropertyDescriptor(Document.prototype, 'body').get || function() {
+        throw new Error(`wasm-bindgen: GetOwnOrInheritedPropertyDescriptor(Document.prototype, 'body').get does not exist`);
+    };
+    
+    function isLikeNone(x) {
+        return x === undefined || x === null;
+    }
+    
+    __exports.__widl_f_body_Document = function(arg0) {
+        
+        const val = __widl_f_body_Document_target.call(getObject(arg0));
+        return isLikeNone(val) ? 0 : addHeapObject(val);
+        
+    };
+    
+    const __widl_f_set_inner_html_Element_target = GetOwnOrInheritedPropertyDescriptor(Element.prototype, 'innerHTML').set || function() {
+        throw new Error(`wasm-bindgen: GetOwnOrInheritedPropertyDescriptor(Element.prototype, 'innerHTML').set does not exist`);
+    };
+    
+    __exports.__widl_f_set_inner_html_Element = function(arg0, arg1, arg2) {
+        let varg1 = getStringFromWasm(arg1, arg2);
+        __widl_f_set_inner_html_Element_target.call(getObject(arg0), varg1);
+    };
+    
+    const __widl_f_append_child_Node_target = Node.prototype.appendChild || function() {
+        throw new Error(`wasm-bindgen: Node.prototype.appendChild does not exist`);
+    };
+    
+    __exports.__widl_f_append_child_Node = function(arg0, arg1, exnptr) {
+        try {
+            return addHeapObject(__widl_f_append_child_Node_target.call(getObject(arg0), getObject(arg1)));
+        } catch (e) {
+            const view = getUint32Memory();
+            view[exnptr / 4] = 1;
+            view[exnptr / 4 + 1] = addHeapObject(e);
+            
+        }
+    };
+    
     __exports.__widl_f_new_with_str_and_init_Request = function(arg0, arg1, arg2, exnptr) {
         let varg0 = getStringFromWasm(arg0, arg1);
         try {
@@ -111,8 +175,21 @@
         }
     };
     
+    __exports.__widl_f_document_ = function() {
+        
+        const val = (() => document)();
+        return isLikeNone(val) ? 0 : addHeapObject(val);
+        
+    };
+    
     __exports.__widl_f_fetch_with_request_ = function(arg0) {
         return addHeapObject(fetch(getObject(arg0)));
+    };
+    
+    const __widl_f_log_1__target = console.log;
+    
+    __exports.__widl_f_log_1_ = function(arg0) {
+        __widl_f_log_1__target(getObject(arg0));
     };
     
     const __wbg_call_99e981b05e14efcd_target = Function.prototype.call || function() {
@@ -279,7 +356,7 @@
         dropRef(i);
     };
     
-    __exports.__wbindgen_closure_wrapper805 = function(ptr, f) {
+    __exports.__wbindgen_closure_wrapper1488 = function(ptr, f) {
         let cb = function(arg0) {
             let a = this.a;
             this.a = 0;

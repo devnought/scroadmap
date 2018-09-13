@@ -13,4 +13,16 @@ js-sys = { git = "https://github.com/rustwasm/wasm-bindgen" }
 payload = { path = "../payload" }
 wasm-bindgen = { git = "https://github.com/rustwasm/wasm-bindgen" }
 wasm-bindgen-futures = { git = "https://github.com/rustwasm/wasm-bindgen" }
-web-sys = { git = "https://github.com/rustwasm/wasm-bindgen", features = [ "Request", "RequestInit", "Response", "Window" ] }
+
+[dependencies.web-sys]
+git = "https://github.com/rustwasm/wasm-bindgen"
+features = [
+    "Document",
+    "Element",
+    "HtmlElement",
+    "Node",
+    "Request",
+    "RequestInit",
+    "Response",
+    "Window",
+]

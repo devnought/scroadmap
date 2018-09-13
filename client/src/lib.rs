@@ -4,32 +4,7 @@ use futures::{future, Future};
 use js_sys::{Promise, Uint8Array};
 use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::{future_to_promise, JsFuture};
-use web_sys::{Request, RequestInit, Response, Window};
-
-#[wasm_bindgen]
-extern "C" {
-    // Document
-    /*type HTMLDocument;
-    static document: HTMLDocument;
-
-    #[wasm_bindgen(method, js_name = createElement)]
-    fn create_element(this: &HTMLDocument, tag_name: &str) -> Element;
-
-    #[wasm_bindgen(method, getter)]
-    fn body(this: &HTMLDocument) -> Element;
-
-    // Element
-    type Element;
-    #[wasm_bindgen(method, setter = innerHTML)]
-    fn set_inner_html(this: &Element, html: &str);
-
-    #[wasm_bindgen(method, js_name = appendChild)]
-    fn append_child(this: &Element, other: Element);*/
-
-    // Console
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-}
+use web_sys::{console, Node, Request, RequestInit, Response, Window};
 
 #[wasm_bindgen]
 pub fn main() -> Promise {
@@ -57,11 +32,25 @@ pub fn main() -> Promise {
 
             let payload = payload::decode(&buffer);
 
-            future::ok(JsValue::from_str(&format!("{:#?}", payload)))
+            log("got payload");
+
+            let document = Window::document().unwrap();
+            let div = document.create_element("div").unwrap();
+            div.set_inner_html(&format!("{:#?}", payload));
+
+            (document.body().unwrap().as_ref() as &Node)
+                .append_child(div.as_ref() as &Node)
+                .unwrap();
+
+            future::ok(JsValue::TRUE)
         });
 
     // Convert this Rust `Future` back into a JS `Promise`.
     future_to_promise(future)
+}
+
+fn log(message: &str) {
+    console::log_1(&JsValue::from_str(message));
 }
 
 #[cfg(test)]
