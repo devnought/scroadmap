@@ -4,7 +4,7 @@ use futures::{future, Future};
 use js_sys::{Promise, Uint8Array};
 use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::{future_to_promise, JsFuture};
-use web_sys::{console, Node, Request, RequestInit, Response, Window};
+use web_sys::{console, Node, Request, RequestInit, Response};
 
 #[wasm_bindgen]
 pub fn main() -> Promise {
@@ -12,7 +12,9 @@ pub fn main() -> Promise {
     opts.method("GET");
 
     let request = Request::new_with_str_and_init("1532669929.bin.br", &opts).unwrap();
-    let request_promise = Window::fetch_with_request(&request);
+
+    let window = web_sys::window().unwrap();
+    let request_promise = window.fetch_with_request(&request);
 
     let future = JsFuture::from(request_promise)
         .and_then(|resp_value| {
