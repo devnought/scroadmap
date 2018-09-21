@@ -6,7 +6,7 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 [workspace]
 
 [dependencies]
-actix-web = { version = "0.7.7", default-features = false }
+actix-web = { version = "0.7.8", default-features = false }
 payload = { path = "../payload" }
 reqwest = "0.8.8"
-serde_json = "1.0.27"
+serde_json = "1.0.28"
