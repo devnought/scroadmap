@@ -1,9 +1,4 @@
-extern crate bincode;
-extern crate brotli;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-
+use serde_derive::{Deserialize, Serialize};
 use std::io::Write;
 
 #[derive(Serialize, Deserialize, Debug)]

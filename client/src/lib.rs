@@ -36,11 +36,14 @@ pub fn main() -> Promise {
 
             log("got payload");
 
-            let document = Window::document().unwrap();
+            let window = web_sys::window().expect("no global `window` exists");
+            let document = window.document().expect("should have a document on window");
+            let body = document.body().expect("document should have a body");
+
             let div = document.create_element("div").unwrap();
             div.set_inner_html(&format!("{:#?}", payload));
 
-            (document.body().unwrap().as_ref() as &Node)
+            (body.as_ref() as &Node)
                 .append_child(div.as_ref() as &Node)
                 .unwrap();
 
