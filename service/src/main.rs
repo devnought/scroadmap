@@ -1,8 +1,6 @@
-extern crate actix_web;
-extern crate scroadmap;
-
 use actix_web::{
-    http::{Method, StatusCode}, server, App, HttpRequest, HttpResponse,
+    http::{Method, StatusCode},
+    server, App, HttpRequest, HttpResponse,
 };
 
 fn index(req: &HttpRequest) -> actix_web::Result<HttpResponse> {

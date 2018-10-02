@@ -405,7 +405,7 @@
         dropRef(i);
     };
 
-    __exports.__wbindgen_closure_wrapper1504 = function(ptr, f, _ignored) {
+    __exports.__wbindgen_closure_wrapper1500 = function(ptr, f, _ignored) {
         let cb = function(arg0) {
             let a = this.a;
             this.a = 0;
