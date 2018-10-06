@@ -46,12 +46,6 @@
         return takeObject(wasm.main());
     };
 
-    const __widl_f_log_1__target = console.log;
-
-    __exports.__widl_f_log_1_ = function(arg0) {
-        __widl_f_log_1__target(getObject(arg0));
-    };
-
     const __widl_f_create_element_Document_target = Document.prototype.createElement || function() {
         throw new Error(`wasm-bindgen: Document.prototype.createElement does not exist`);
     };
@@ -201,6 +195,12 @@
 
     __exports.__widl_f_fetch_with_request_Window = function(arg0, arg1) {
         return addHeapObject(__widl_f_fetch_with_request_Window_target.call(getObject(arg0), getObject(arg1)));
+    };
+
+    const __widl_f_log_1__target = console.log;
+
+    __exports.__widl_f_log_1_ = function(arg0) {
+        __widl_f_log_1__target(getObject(arg0));
     };
 
     __exports.__wbg_newnoargs_b1f726fad978f5a3 = function(arg0, arg1) {
