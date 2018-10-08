@@ -4,7 +4,7 @@ use actix_web::{
 };
 
 fn index(req: &HttpRequest) -> actix_web::Result<HttpResponse> {
-    scroadmap::get_stuff();
+    service::get_stuff();
 
     Ok(HttpResponse::build(StatusCode::OK)
         .content_type("text/html; charset=utf-8")

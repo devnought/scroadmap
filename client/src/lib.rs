@@ -33,7 +33,7 @@ pub fn main() -> Promise {
                 buffer.push(val);
             });
 
-            let payload = payload::decode(&buffer);
+            let payload = scroadmap::decode(&buffer);
 
             log("got payload");
 

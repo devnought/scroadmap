@@ -1,9 +1,6 @@
-extern crate payload;
-extern crate reqwest;
-extern crate serde_json;
+#![warn(rust_2018_idioms)]
 
-use payload::Payload;
-
+use scroadmap::Payload;
 use std::fs::File;
 use std::io::BufWriter;
 
@@ -42,5 +39,5 @@ fn write_bincode_brotli(payload: &Payload) {
 
     let file = File::create(file_name).expect("Could not create file");
 
-    payload::encode(payload, file);
+    scroadmap::encode(payload, file);
 }

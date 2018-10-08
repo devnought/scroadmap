@@ -1,8 +1,14 @@
 [package]
 edition = "2018"
-name = "payload"
+name = "scroadmap"
 version = "0.1.0"
-authors = ["Kyle Gretchev <kyle.gretchev@magnetforensics.com>"]
+authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
+
+[workspace]
+members = [
+    "client",
+    "service",
+]
 
 [dependencies]
 bincode = "1.0.1"
