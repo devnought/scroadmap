@@ -1,3 +1,6 @@
 **/target
 **/*.rs.bk
 **/node_modules
+**/client/static/*.wasm
+**/client/static/*.js
+**/client/static/*.ts
