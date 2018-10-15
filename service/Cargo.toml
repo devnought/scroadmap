@@ -5,7 +5,7 @@ version = "0.1.0"
 authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 
 [dependencies]
-actix-web = { version = "0.7.11", default-features = false }
+actix-web = { version = "0.7.13", default-features = false }
 scroadmap = { path = "../" }
 reqwest = "0.9.2"
 serde_json = "1.0.32"
