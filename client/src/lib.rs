@@ -20,7 +20,8 @@ pub fn main() -> Promise {
         .and_then(|resp_value| {
             let resp = resp_value.dyn_into::<Response>().unwrap();
             resp.array_buffer()
-        }).and_then(|array_buffer_value: Promise| JsFuture::from(array_buffer_value))
+        })
+        .and_then(|array_buffer_value: Promise| JsFuture::from(array_buffer_value))
         .and_then(|array_buffer| {
             let data = Uint8Array::new(&array_buffer);
 
@@ -32,7 +33,7 @@ pub fn main() -> Promise {
                 buffer.push(val);
             });
 
-            let payload = payload::decode(&buffer);
+            let payload = scroadmap::decode(&buffer);
 
             log("got payload");
 

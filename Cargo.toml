@@ -1,0 +1,17 @@
+[package]
+edition = "2018"
+name = "scroadmap"
+version = "0.1.0"
+authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
+
+[workspace]
+members = [
+    "client",
+    "service",
+]
+
+[dependencies]
+bincode = "1.0.1"
+brotli = "2.5.1"
+serde = "1.0.79"
+serde_derive = "1.0.79"
