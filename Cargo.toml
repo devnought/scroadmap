@@ -12,6 +12,6 @@ members = [
 
 [dependencies]
 bincode = "1.0.1"
-brotli = "2.5.1"
+brotli = "3.0.2"
 serde = "1.0.80"
 serde_derive = "1.0.80"
