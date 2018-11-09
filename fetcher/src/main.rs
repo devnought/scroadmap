@@ -1,10 +1,8 @@
-#![warn(rust_2018_idioms)]
-
 use scroadmap::Payload;
 use std::fs::File;
 use std::io::BufWriter;
 
-pub fn get_stuff() {
+fn main() {
     println!("Grabbing payload");
 
     let mut res = reqwest::get("https://robertsspaceindustries.com/api/roadmap/v1/boards/1")
