@@ -82,7 +82,7 @@ pub struct PayloadReleaseCard {
     category_id: u32,
     importer_id: String,
     description: String,
-    body: String,
+    body: Option<String>,
     order: u32,
     thumbnail: Option<PayloadThumbnail>,
     inprogress: u32,
