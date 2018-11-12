@@ -34,6 +34,58 @@ pub struct PayloadData {
 }
 
 impl PayloadData {
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+
+    pub fn url_slug(&self) -> &str {
+        &self.url_slug
+    }
+
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn description(&self) -> &str {
+        &self.description
+    }
+
+    pub fn body(&self) -> &str {
+        &self.body
+    }
+
+    pub fn order(&self) -> &str {
+        &self.order
+    }
+
+    pub fn thumbnail(&self) -> &PayloadThumbnail {
+        &self.thumbnail
+    }
+
+    pub fn background(&self) -> &PayloadThumbnail {
+        &self.background
+    }
+
+    pub fn importer_id(&self) -> &str {
+        &self.importer_id
+    }
+
+    pub fn info_heading(&self) -> &str {
+        &self.info_heading
+    }
+
+    pub fn releases(&self) -> impl Iterator<Item = &PayloadRelease> {
+        self.releases.iter()
+    }
+
+    pub fn categories(&self) -> impl Iterator<Item = &PayloadReleaseCategory> {
+        self.categories.iter()
+    }
+
+    pub fn tags(&self) -> impl Iterator<Item = &str> {
+        self.tags.iter().map(|x| x.as_str())
+    }
+
     pub fn last_updated(&self) -> usize {
         self.last_updated
     }
@@ -45,12 +97,40 @@ pub struct PayloadThumbnail {
     urls: PayloadThumbnailUrls,
 }
 
+impl PayloadThumbnail {
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+
+    pub fn urls(&self) -> &PayloadThumbnailUrls {
+        &self.urls
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PayloadThumbnailUrls {
     square: Option<String>,
     rect: Option<String>,
     large: Option<String>,
     source: Option<String>,
+}
+
+impl PayloadThumbnailUrls {
+    pub fn square(&self) -> Option<&str> {
+        self.square.as_ref().map(|x| x.as_str())
+    }
+
+    pub fn rect(&self) -> Option<&str> {
+        self.rect.as_ref().map(|x| x.as_str())
+    }
+
+    pub fn large(&self) -> Option<&str> {
+        self.large.as_ref().map(|x| x.as_str())
+    }
+
+    pub fn source(&self) -> Option<&str> {
+        self.source.as_ref().map(|x| x.as_str())
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug)]

@@ -26,6 +26,26 @@ impl Payload {
     pub fn last_updated(&self) -> usize {
         self.last_updated
     }
+
+    //pub fn from_json_payload(payload: &crate::json::Payload) -> Option<Self> {
+    //    let data = payload.data()?;
+    //
+    //    let p = Self {
+    //        id: data.id().into(),
+    //        url_slug: data.url_slug().into(),
+    //        name: data.name().into(),
+    //        description: data.description().into(),
+    //        body: data.body().into(),
+    //        order: data.order().into(),
+    //        thumbnail: PayloadThumbnail::from_json_payload(data.thumbnail()),
+    //        background: PayloadThumbnail::from_json_payload(data.background()),
+    //        importer_id: data.importer_id().into(),
+    //        info_heading: data.info_heading().into(),
+    //        releases: data.releases().map(|x| (x.))
+    //    };
+    //
+    //    Some(p)
+    //}
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -34,12 +54,32 @@ pub struct PayloadThumbnail {
     urls: PayloadThumbnailUrls,
 }
 
+impl PayloadThumbnail {
+    fn from_json_payload(payload: &crate::json::PayloadThumbnail) -> Self {
+        Self {
+            id: payload.id().into(),
+            urls: PayloadThumbnailUrls::from_json_payload(payload.urls()),
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PayloadThumbnailUrls {
     square: Option<String>,
     rect: Option<String>,
     large: Option<String>,
     source: Option<String>,
+}
+
+impl PayloadThumbnailUrls {
+    fn from_json_payload(payload: &crate::json::PayloadThumbnailUrls) -> Self {
+        Self {
+            square: payload.square().map(|x| x.into()),
+            rect: payload.rect().map(|x| x.into()),
+            large: payload.large().map(|x| x.into()),
+            source: payload.source().map(|x| x.into()),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug)]

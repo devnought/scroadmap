@@ -1,5 +1,3 @@
-#![warn(rust_2018_idioms)]
-
 use futures::{future, Future};
 use js_sys::{Promise, Uint8Array};
 use wasm_bindgen::{prelude::*, JsCast};
@@ -33,7 +31,7 @@ pub fn main() -> Promise {
                 buffer.push(val);
             });
 
-            let payload = scroadmap::decode(&buffer);
+            let payload = scroadmap::json::decode(&buffer);
 
             log("got payload");
 

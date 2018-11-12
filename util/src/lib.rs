@@ -1,6 +1,6 @@
 use std::{fs::File, io::BufWriter, path::Path};
 
-pub fn write_json(path: &Path, payload: &mut scroadmap::json::Payload) {
+pub fn write_json(path: &Path, payload: &scroadmap::json::Payload) {
     let file_name = format!(
         "{}.json",
         payload.data().expect("No payload data").last_updated()

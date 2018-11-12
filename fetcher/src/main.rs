@@ -1,4 +1,4 @@
-use scroadmap::Payload;
+use scroadmap::json::Payload;
 use std::path::Path;
 
 fn main() {

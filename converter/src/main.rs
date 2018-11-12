@@ -1,4 +1,4 @@
-use scroadmap::Payload;
+use scroadmap::json::Payload;
 use std::{
     fs::{self, File},
     io::BufReader,
