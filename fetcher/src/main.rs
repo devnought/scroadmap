@@ -1,6 +1,5 @@
 use scroadmap::Payload;
-use std::fs::File;
-use std::io::BufWriter;
+use std::path::Path;
 
 fn main() {
     println!("Grabbing payload");
@@ -9,33 +8,11 @@ fn main() {
         .expect("Error sending get request");
 
     let payload = res.json::<Payload>().expect("Could not get JSON result");
+    let path = Path::new("payloads");
 
     println!("Got payload");
-    write_json(&payload);
+    util::write_json(&path, &payload);
     println!("Wrote payload");
-    write_bincode_brotli(&payload);
+    util::write_bincode_brotli(&path, &payload);
     println!("Wrote compressed binary payload");
-}
-
-fn write_json(payload: &Payload) {
-    let file_name = format!(
-        "payloads/{}.json",
-        payload.data().expect("No payload data").last_updated()
-    );
-
-    let file = File::create(file_name).expect("Could not create file");
-    let writer = BufWriter::new(file);
-
-    serde_json::to_writer(writer, &payload).expect("Could not write data to file");
-}
-
-fn write_bincode_brotli(payload: &Payload) {
-    let file_name = format!(
-        "payloads/{}.bin.br",
-        payload.data().expect("No payload data").last_updated()
-    );
-
-    let file = File::create(file_name).expect("Could not create file");
-
-    scroadmap::encode(payload, file);
 }

@@ -7,7 +7,9 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 [workspace]
 members = [
     "client",
+    "converter",
     "fetcher",
+    "util",
 ]
 
 [dependencies]

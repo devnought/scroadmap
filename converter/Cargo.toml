@@ -1,11 +1,10 @@
 [package]
-name = "fetcher"
+name = "converter"
 version = "0.1.0"
 authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-reqwest = "0.9.4"
 scroadmap = { path = "../" }
 serde_json = "1.0.33"
 util = { path = "../util" }
