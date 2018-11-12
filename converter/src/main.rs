@@ -6,7 +6,7 @@ use std::{
 };
 
 fn main() {
-    let payload_path = Path::new("../fetcher/payloads");
+    let payload_path = Path::new("../payloads");
     let entries = fs::read_dir(&payload_path)
         .expect("Could not read payloads directory")
         .filter_map(|x| x.ok())

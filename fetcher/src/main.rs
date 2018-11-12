@@ -8,7 +8,7 @@ fn main() {
         .expect("Error sending get request");
 
     let payload = res.json::<Payload>().expect("Could not get JSON result");
-    let path = Path::new("payloads");
+    let path = Path::new("../payloads");
 
     println!("Got payload");
     util::write_json(&path, &payload);
