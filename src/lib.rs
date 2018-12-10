@@ -1,5 +1,5 @@
-pub mod json;
 pub mod bin;
+pub mod json;
 
 #[cfg(test)]
 mod tests {
