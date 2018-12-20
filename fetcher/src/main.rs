@@ -4,6 +4,7 @@ use std::path::Path;
 fn main() {
     println!("Grabbing payload");
 
+    // TODO: Handle SQ42 roadmap https://robertsspaceindustries.com/api/roadmap/v1/boards/2
     let mut res = reqwest::get("https://robertsspaceindustries.com/api/roadmap/v1/boards/1")
         .expect("Error sending get request");
 
