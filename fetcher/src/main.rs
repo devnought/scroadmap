@@ -2,14 +2,26 @@ use scroadmap::json::Payload;
 use std::path::Path;
 
 fn main() {
-    println!("Grabbing payload");
+    process(
+        "https://robertsspaceindustries.com/api/roadmap/v1/boards/1",
+        "Star Citizen",
+        Path::new("../payloads"),
+    );
 
-    // TODO: Handle SQ42 roadmap https://robertsspaceindustries.com/api/roadmap/v1/boards/2
-    let mut res = reqwest::get("https://robertsspaceindustries.com/api/roadmap/v1/boards/1")
-        .expect("Error sending get request");
+    process(
+        "https://robertsspaceindustries.com/api/roadmap/v1/boards/2",
+        "SQ42",
+        Path::new("../payloads/sq42"),
+    );
+}
 
-    let payload = res.json::<Payload>().expect("Could not get JSON result");
-    let path = Path::new("../payloads");
+fn process(url: &str, name: &str, path: &Path) {
+    println!("Grabbing {} payload", name);
+
+    let payload = reqwest::get(url)
+        .expect("Error sending get request")
+        .json::<Payload>()
+        .expect("Could not get JSON result");
 
     println!("Got payload");
     util::write_json(&path, &payload);

@@ -1,4 +1,4 @@
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 use std::io::Write;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -24,7 +24,7 @@ pub struct PayloadData {
     body: String,
     order: String,
     thumbnail: PayloadThumbnail,
-    background: PayloadThumbnail,
+    background: Option<PayloadThumbnail>,
     importer_id: String,
     info_heading: String,
     releases: Vec<PayloadRelease>,
@@ -62,8 +62,8 @@ impl PayloadData {
         &self.thumbnail
     }
 
-    pub fn background(&self) -> &PayloadThumbnail {
-        &self.background
+    pub fn background(&self) -> Option<&PayloadThumbnail> {
+        self.background.as_ref()
     }
 
     pub fn importer_id(&self) -> &str {
@@ -140,7 +140,7 @@ pub struct PayloadRelease {
     time_created: usize,
     time_modified: usize,
     name: String,
-    description: String,
+    description: Option<String>,
     board_id: usize,
     scheduled_at: Option<String>,
     order: usize,

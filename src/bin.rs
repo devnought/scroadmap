@@ -1,4 +1,4 @@
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 use std::{
     collections::{BTreeMap, BTreeSet},
     io::Write,
@@ -13,7 +13,7 @@ pub struct Payload {
     body: String,
     order: String,
     thumbnail: PayloadThumbnail,
-    background: PayloadThumbnail,
+    background: Option<PayloadThumbnail>,
     importer_id: String,
     info_heading: String,
     releases: BTreeMap<String, PayloadRelease>,
@@ -88,7 +88,7 @@ pub struct PayloadRelease {
     time_created: usize,
     time_modified: usize,
     name: String,
-    description: String,
+    description: Option<String>,
     board_id: usize,
     scheduled_at: Option<String>,
     order: usize,
