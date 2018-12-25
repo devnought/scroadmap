@@ -6,8 +6,15 @@ use std::{
 };
 
 fn main() {
-    let payload_path = Path::new("../payloads");
-    let entries = fs::read_dir(&payload_path)
+    convert("../payloads");
+    convert("../payloads/sq42");
+}
+
+fn convert<P>(path: P)
+where
+    P: AsRef<Path>,
+{
+    let entries = fs::read_dir(&path)
         .expect("Could not read payloads directory")
         .filter_map(|x| x.ok())
         .filter(|x| x.file_type().ok().map(|x| x.is_file()).unwrap_or(false))
@@ -19,6 +26,6 @@ fn main() {
         let payload: Payload =
             serde_json::from_reader(reader).expect("Could not deserialize payload");
 
-        util::write_bincode_brotli(&payload_path, &payload);
+        util::write_bincode_brotli(&path, &payload);
     }
 }
