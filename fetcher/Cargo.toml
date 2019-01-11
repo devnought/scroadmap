@@ -5,7 +5,7 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-reqwest = "0.9.5"
+reqwest = "0.9.7"
 scroadmap = { path = "../" }
 serde_json = "1.0.34"
 util = { path = "../util" }
