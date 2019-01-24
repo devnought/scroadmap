@@ -2,34 +2,25 @@ use futures::{future, Future};
 use js_sys::{Promise, Uint8Array};
 use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::{future_to_promise, JsFuture};
-use web_sys::{console, Node, Request, RequestInit, Response};
+use web_sys::{console, Node, Response};
 
 #[wasm_bindgen]
 pub fn main() -> Promise {
-    let mut opts = RequestInit::new();
-    opts.method("GET");
-
-    let request = Request::new_with_str_and_init("1532669929.bin.br", &opts).unwrap();
-
     let window = web_sys::window().unwrap();
-    let request_promise = window.fetch_with_request(&request);
+    let request_promise = window.fetch_with_str("1532669929.bin.br");
 
     let future = JsFuture::from(request_promise)
         .and_then(|resp_value| {
             let resp = resp_value.dyn_into::<Response>().unwrap();
-            resp.array_buffer()
+            let b = resp.array_buffer().unwrap();
+
+            JsFuture::from(b)
         })
-        .and_then(|array_buffer_value: Promise| JsFuture::from(array_buffer_value))
         .and_then(|array_buffer| {
             let data = Uint8Array::new(&array_buffer);
 
-            // Dirty hack for now until uint8array can be used or coerced
-            // into a slice or vec.
-            let mut buffer = Vec::new();
-
-            data.for_each(&mut |val, _, _| {
-                buffer.push(val);
-            });
+            let mut buffer = vec![0; data.length() as usize];
+            data.copy_to(&mut buffer);
 
             let payload = scroadmap::json::decode(&buffer);
 
