@@ -13,6 +13,6 @@ members = [
 ]
 
 [dependencies]
-bincode = "1.0.1"
-brotli = "3.1.8"
+bincode = "1.1.1"
+brotli = "3.3.0"
 serde = { version = "1.0.87", features = ["derive"] }
