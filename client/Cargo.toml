@@ -8,7 +8,7 @@ authors = ["Kyle Gretchev <kgretchev@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-futures = "0.1.25"
+futures = "0.1.26"
 js-sys = "0.3.17"
 scroadmap = { path = "../" }
 wasm-bindgen = "0.2.40"
