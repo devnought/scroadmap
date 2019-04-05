@@ -15,4 +15,4 @@ members = [
 [dependencies]
 bincode = "1.1.2"
 brotli = "3.3.0"
-serde = { version = "1.0.89", features = ["derive"] }
+serde = { version = "1.0.90", features = ["derive"] }
