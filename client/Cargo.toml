@@ -9,13 +9,13 @@ crate-type = ["cdylib"]
 
 [dependencies]
 futures = "0.1.26"
-js-sys = "0.3.17"
+js-sys = "0.3.19"
 scroadmap = { path = "../" }
-wasm-bindgen = "0.2.40"
-wasm-bindgen-futures = "0.3.17"
+wasm-bindgen = "0.2.42"
+wasm-bindgen-futures = "0.3.19"
 
 [dependencies.web-sys]
-version = "0.3.17"
+version = "0.3.19"
 features = [
     "console",
     "Document",
