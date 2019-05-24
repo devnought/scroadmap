@@ -13,6 +13,11 @@ pub fn main() -> Promise {
     })
 }
 
+#[wasm_bindgen(start)]
+pub fn start() {
+    log("START");
+}
+
 async fn main_impl() {
     let window = web_sys::window().unwrap();
     let request_promise = window.fetch_with_str("1532669929.bin.br");
