@@ -1,47 +1,57 @@
-use futures::{future, Future};
+#![feature(async_await)]
+
 use js_sys::{Promise, Uint8Array};
 use wasm_bindgen::{prelude::*, JsCast};
-use wasm_bindgen_futures::{future_to_promise, JsFuture};
+use wasm_bindgen_futures::futures_0_3::{future_to_promise, JsFuture};
 use web_sys::{console, Node, Response};
 
 #[wasm_bindgen]
 pub fn main() -> Promise {
+    future_to_promise(async move {
+        main_impl().await;
+        Ok(JsValue::TRUE)
+    })
+}
+
+async fn main_impl() {
     let window = web_sys::window().unwrap();
     let request_promise = window.fetch_with_str("1532669929.bin.br");
+    let future = JsFuture::from(request_promise);
 
-    let future = JsFuture::from(request_promise)
-        .and_then(|resp_value| {
-            let resp = resp_value.dyn_into::<Response>().unwrap();
-            let b = resp.array_buffer().unwrap();
+    let response = future.await.expect("Could not get payload");
 
-            JsFuture::from(b)
-        })
-        .and_then(|array_buffer| {
-            let data = Uint8Array::new(&array_buffer);
+    let resp = response
+        .dyn_into::<Response>()
+        .expect("Could not convert to response");
+    let array_buffer_promise = resp
+        .array_buffer()
+        .expect("Could not get resposne array buffer");
+    let array_buffer = JsFuture::from(array_buffer_promise)
+        .await
+        .expect("Could not resolve array buffer promise");
+    let data = Uint8Array::new(&array_buffer);
 
-            let mut buffer = vec![0; data.length() as usize];
-            data.copy_to(&mut buffer);
+    let mut buffer = vec![0; data.length() as usize];
+    data.copy_to(&mut buffer);
 
-            let payload = scroadmap::json::decode(&buffer);
+    log(&format!("{:#?}", &array_buffer));
 
-            log("got payload");
+    log("decoding payload");
 
-            let window = web_sys::window().expect("no global `window` exists");
-            let document = window.document().expect("should have a document on window");
-            let body = document.body().expect("document should have a body");
+    let payload = scroadmap::json::decode(&buffer);
 
-            let div = document.create_element("div").unwrap();
-            div.set_inner_html(&format!("{:#?}", payload));
+    log("got payload");
 
-            (body.as_ref() as &Node)
-                .append_child(div.as_ref() as &Node)
-                .unwrap();
+    let window = web_sys::window().expect("no global `window` exists");
+    let document = window.document().expect("should have a document on window");
+    let body = document.body().expect("document should have a body");
 
-            future::ok(JsValue::TRUE)
-        });
+    let div = document.create_element("div").unwrap();
+    div.set_inner_html(&format!("{:#?}", payload));
 
-    // Convert this Rust `Future` back into a JS `Promise`.
-    future_to_promise(future)
+    (body.as_ref() as &Node)
+        .append_child(div.as_ref() as &Node)
+        .unwrap();
 }
 
 fn log(message: &str) {
