@@ -7,7 +7,7 @@ use web_sys::{console, Node, Response};
 
 #[wasm_bindgen]
 pub fn main() -> Promise {
-    future_to_promise(async move {
+    future_to_promise(async {
         main_impl().await;
         Ok(JsValue::TRUE)
     })
