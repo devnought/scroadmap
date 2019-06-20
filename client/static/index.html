@@ -13,9 +13,15 @@
         import init, { main } from "./client.js";
 
         (async function () {
+            console.log("### INIT START");
             await init();
+            console.log("### INIT COMPLETE");
 
-            main().then(ret => console.log(ret));
+            console.log("### MAIN START");
+            let ret = await main();
+            console.log("### MAIN COMPLETE");
+
+            console.log(ret);
         })();
     </script>
 </body>
