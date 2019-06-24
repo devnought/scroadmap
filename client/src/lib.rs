@@ -1,9 +1,10 @@
 #![feature(async_await)]
 
 use js_sys::{Promise, Uint8Array};
+use scroadmap::json::Payload;
 use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::futures_0_3::{future_to_promise, JsFuture};
-use web_sys::{console, Node, Response};
+use web_sys::{console, Document, Node, Response};
 
 #[wasm_bindgen]
 pub fn main() -> Promise {
@@ -50,13 +51,24 @@ async fn main_impl() {
     let window = web_sys::window().expect("no global `window` exists");
     let document = window.document().expect("should have a document on window");
     let body = document.body().expect("document should have a body");
+    let body_ref = body.as_ref() as &Node;
+
+    render_payload(&document, body_ref, &payload);
+}
+
+fn render_payload(document: &Document, body: &Node, payload: &Payload) {
+    let data = payload.data().unwrap();
+
+    let name = document.create_element("div").unwrap();
+    name.set_inner_html(data.name());
+
+    
 
     let div = document.create_element("div").unwrap();
-    div.set_inner_html(&format!("{:#?}", payload));
+    div.set_inner_html(&format!("{:#?}", data));
 
-    (body.as_ref() as &Node)
-        .append_child(div.as_ref() as &Node)
-        .unwrap();
+    body.append_child(name.as_ref() as &Node).unwrap();
+    body.append_child(div.as_ref() as &Node).unwrap();
 }
 
 fn log(message: &str) {
