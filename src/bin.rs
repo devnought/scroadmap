@@ -1,3 +1,6 @@
+// TODO: Purge released cards from bin files.
+//       See todo further down.
+
 use serde::{Deserialize, Serialize};
 use std::{
     collections::{BTreeMap, BTreeSet},
@@ -115,7 +118,7 @@ pub struct PayloadReleaseCard {
     inprogress: u32,
     completed: u32,
     tasks: u32,
-    released: u32,
+    released: u32, // TODO: Purge released cards from bin files
 }
 
 #[derive(Serialize, Deserialize, Debug)]

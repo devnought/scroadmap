@@ -62,8 +62,6 @@ fn render_payload(document: &Document, body: &Node, payload: &Payload) {
     let name = document.create_element("div").unwrap();
     name.set_inner_html(data.name());
 
-    
-
     let div = document.create_element("div").unwrap();
     div.set_inner_html(&format!("{:#?}", data));
 
